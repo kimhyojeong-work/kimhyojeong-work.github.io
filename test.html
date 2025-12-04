@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta name="format-detection" content="telephone=no, address=no, email=no" />
+        <title>list | Component | Guide</title>
+      <style>/* Icon */
+[class*=comp-icon] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--icon-color, inherit);
+  font-size: var(--icon-size, 20px);
+  vertical-align: middle;
+}
+[class*=comp-icon]::before {
+  content: "";
+  display: inline-block;
+  width: 1em;
+  aspect-ratio: 1;
+  background-color: currentColor;
+  mask-image: var(--icon-mask-image);
+  mask-size: contain;
+  mask-position: var(--icon-mask-position, center);
+  mask-repeat: no-repeat;
+  -webkit-mask-image: var(--icon-mask-image);
+  -webkit-mask-size: contain;
+  -webkit-mask-position: var(--icon-mask-position, center);
+  -webkit-mask-repeat: no-repeat;
+}
+
+.comp-icon-dummy {
+  --icon-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28' fill='none'%3E%3Cpath d='M8.64264 10.8096C10.0372 10.8096 11.1446 11.6345 11.3679 13.0518H10.3562C10.1967 12.1996 9.49028 11.7256 8.65175 11.7301C7.51258 11.7257 6.66933 12.6007 6.66477 14.2002C6.66933 15.8088 7.51713 16.6747 8.65175 16.6702C9.48116 16.6748 10.183 16.2099 10.3562 15.3669L11.3679 15.376C11.1582 16.6793 10.0964 17.5908 8.64264 17.5908C6.92469 17.5907 5.67129 16.3101 5.67129 14.2002C5.67129 12.0903 6.9338 10.8097 8.64264 10.8096Z' fill='%23101828'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15.0274 10.8096C16.7318 10.8096 17.9988 12.0902 17.9988 14.2002C17.9988 16.3102 16.7318 17.5908 15.0274 17.5908C13.3095 17.5907 12.0469 16.3055 12.0469 14.2002C12.0469 12.0903 13.3095 10.8097 15.0274 10.8096ZM15.0274 11.7301C13.8882 11.7257 13.045 12.5962 13.0404 14.2002C13.045 15.8042 13.8882 16.6747 15.0274 16.6702C16.1576 16.6748 17.0007 15.8044 17.0053 14.2002C17.0007 12.596 16.1576 11.7256 15.0274 11.7301Z' fill='%23101828'/%3E%3Cpath d='M4.73704 17.4997H3.73444V10.9007H4.73704V17.4997Z' fill='%23101828'/%3E%3Cpath d='M23.218 15.7314H23.2818V10.9007H24.2662V17.4997H23.3456L20.0006 12.6781H19.9459V17.4997H18.9433V10.9007H19.8729L23.218 15.7314Z' fill='%23101828'/%3E%3C/svg%3E");
+}
+.comp-icon-dummy.s28 {
+  --icon-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28' fill='none'%3E%3Cpath d='M8.64264 10.8096C10.0372 10.8096 11.1446 11.6345 11.3679 13.0518H10.3562C10.1967 12.1996 9.49028 11.7256 8.65175 11.7301C7.51258 11.7257 6.66933 12.6007 6.66477 14.2002C6.66933 15.8088 7.51713 16.6747 8.65175 16.6702C9.48116 16.6748 10.183 16.2099 10.3562 15.3669L11.3679 15.376C11.1582 16.6793 10.0964 17.5908 8.64264 17.5908C6.92469 17.5907 5.67129 16.3101 5.67129 14.2002C5.67129 12.0903 6.9338 10.8097 8.64264 10.8096Z' fill='%23101828'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15.0274 10.8096C16.7318 10.8096 17.9988 12.0902 17.9988 14.2002C17.9988 16.3102 16.7318 17.5908 15.0274 17.5908C13.3095 17.5907 12.0469 16.3055 12.0469 14.2002C12.0469 12.0903 13.3095 10.8097 15.0274 10.8096ZM15.0274 11.7301C13.8882 11.7257 13.045 12.5962 13.0404 14.2002C13.045 15.8042 13.8882 16.6747 15.0274 16.6702C16.1576 16.6748 17.0007 15.8044 17.0053 14.2002C17.0007 12.596 16.1576 11.7256 15.0274 11.7301Z' fill='%23101828'/%3E%3Cpath d='M4.73704 17.4997H3.73444V10.9007H4.73704V17.4997Z' fill='%23101828'/%3E%3Cpath d='M23.218 15.7314H23.2818V10.9007H24.2662V17.4997H23.3456L20.0006 12.6781H19.9459V17.4997H18.9433V10.9007H19.8729L23.218 15.7314Z' fill='%23101828'/%3E%3C/svg%3E");
+}
+
+.comp-icon-check {
+  --icon-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cg clip-path='url(%23clip0_35656_45256)'%3E%3Cpath d='M19.9951 6.99512L9.5 17.4902L4.00488 11.9951L4.99512 11.0049L9.5 15.5098L19.0049 6.00488L19.9951 6.99512Z' fill='%23005DF9'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_35656_45256'%3E%3Crect width='20' height='20' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+}
+.comp-icon-check.s20 {
+  --icon-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cg clip-path='url(%23clip0_35656_45256)'%3E%3Cpath d='M19.9951 6.99512L9.5 17.4902L4.00488 11.9951L4.99512 11.0049L9.5 15.5098L19.0049 6.00488L19.9951 6.99512Z' fill='%23005DF9'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_35656_45256'%3E%3Crect width='20' height='20' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+}
+
+.s12 {
+  --icon-size: 12px;
+}
+
+.s16 {
+  --icon-size: 16px;
+}
+
+.s20 {
+  --icon-size: 20px;
+}
+
+.s24 {
+  --icon-size: 24px;
+}
+
+.s28 {
+  --icon-size: 28px;
+}
+
+.s30 {
+  --icon-size: 30px;
+}</style>
+    </head>
+    <body>
+        <div id="wrap" class="new_wrap">
+            <div class="guide">
+              
+                <div class="guide-section">
+                    <div class="guide-title">
+                        <h1 class="text-brand">Info Item (신규)</h1>
+                        <hr />
+                    </div>
+                    <div class="guide-item">
+                        <h2>info item (is-round-xl)</h2>
+                        <a
+                            href="javascript:;"
+                            class="comp-line-item is-arrow is-round-xl is-bg-negative">
+                            <i class="comp-line-item-e-icon-s20" aria-label="불가안내">
+                                <svg
+                                    role="none"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="17"
+                                    height="17"
+                                    viewBox="0 0 17 17"
+                                    fill="none">
+                                    <path
+                                        d="M8.125 0C12.614 4.11974e-05 16.25 3.636 16.25 8.125C16.25 12.614 12.614 16.25 8.125 16.25C3.636 16.25 4.11962e-05 12.614 0 8.125C0 3.63598 3.63598 0 8.125 0ZM8.125 7.02026L5.849 4.74426L4.74426 5.849L7.02026 8.125L4.74426 10.401L5.849 11.5057L8.125 9.22974L10.401 11.5057L11.5057 10.401L9.23035 8.125L11.5057 5.849L10.401 4.74426L8.125 7.02026Z"
+                                        fill="var(--fg-negative-same)" />
+                                </svg>
+                            </i>
+                            <p class="comp-line-item-e-title-md">연결하지 않은 계좌가 있어요.</p>
+                        </a>
+                        <a
+                            href="javascript:;"
+                            class="comp-line-item is-arrow is-round-xl is-bg-notice">
+                            <i class="comp-line-item-e-icon-s20" aria-label="주의안내">
+                                <svg
+                                    aria-hidden="true"
+                                    role="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 20 20"
+                                    fill="none">
+                                    <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M9.17934 2.82987C9.53653 2.18692 10.4616 2.18692 10.8187 2.82987L17.9055 15.5868C18.2527 16.2116 17.8012 16.9795 17.0864 16.9796H2.91164C2.19688 16.9796 1.74481 16.2117 2.09194 15.5868L9.17934 2.82987ZM9.99904 13.5946C9.56757 13.5946 9.21779 13.9444 9.21779 14.3759C9.21803 14.8072 9.56772 15.1571 9.99904 15.1571C10.4303 15.157 10.7801 14.8071 10.7803 14.3759C10.7803 13.9445 10.4304 13.5948 9.99904 13.5946ZM9.21779 6.92777V12.3446H10.7803V6.92777H9.21779Z"
+                                        fill="var(--fg-notice-same)" />
+                                </svg>
+                            </i>
+                            <p class="comp-line-item-e-title-md">주의해야할 항목이 있어요</p>
+                        </a>
+                        <a
+                            href="javascript:;"
+                            class="comp-line-item is-arrow is-round-xl is-bg-success">
+                            <i class="comp-line-item-e-icon-s20" aria-label="완료안내">
+                                <svg
+                                    role="none"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="17"
+                                    height="17"
+                                    viewBox="0 0 17 17"
+                                    fill="none">
+                                    <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M8.125 0C12.614 4.11974e-05 16.25 3.636 16.25 8.125C16.25 12.614 12.614 16.25 8.125 16.25C3.636 16.25 4.11962e-05 12.614 0 8.125C0 3.63598 3.63598 0 8.125 0ZM7.22229 9.27673L5.06653 7.12097L3.96179 8.22571L7.22229 11.4868L12.2888 6.42029L11.1841 5.31555L7.22229 9.27673Z"
+                                        fill="var(--fg-brand-same)" />
+                                </svg>
+                            </i>
+                            <p class="comp-line-item-e-title-md">계좌 연결을 완료하였습니다.</p>
+                        </a>
+                        <a
+                            href="javascript:;"
+                            class="comp-line-item is-round-xl is-bg-graylight is-arrow">
+                            <i class="comp-line-item-e-icon-s20" aria-label="유의안내">
+                                <svg
+                                    role="none"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 20 20"
+                                    fill="none">
+                                    <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M10 1.875C14.489 1.87504 18.125 5.511 18.125 10C18.125 14.489 14.489 18.125 10 18.125C5.511 18.125 1.87504 14.489 1.875 10C1.875 5.51098 5.51098 1.875 10 1.875ZM10.1495 12.9169C9.71806 12.9169 9.36829 13.2666 9.36829 13.6981C9.36841 14.1295 9.71814 14.4794 10.1495 14.4794C10.5808 14.4792 10.9307 14.1294 10.9308 13.6981C10.9308 13.2667 10.5809 12.917 10.1495 12.9169ZM9.36829 6.25V11.6669H10.9308V6.25H9.36829Z"
+                                        fill="var(--fg-quaternary)" />
+                                </svg>
+                            </i>
+                            <p class="comp-line-item-e-title-md">고객님은 면책 대상입니다.</p>
+                        </a>
+                        <h2>info item (is-round-2xl)</h2>
+                        <div class="pd-spacing-xl" style="background: #000">
+                            <a
+                                href="javascript:;"
+                                class="comp-line-item is-between is-bg-white is-round-2xl">
+                                <p class="comp-line-item-e-text-wrap">
+                                    <strong class="comp-line-item-e-title">
+                                        타이틀 (title-medium)
+                                    </strong>
+                                    <strong class="comp-line-item-e-title-lg">
+                                        타이틀 (body-large)
+                                    </strong>
+                                    <strong class="comp-line-item-e-title-md">
+                                        타이틀 (body-medium)
+                                    </strong>
+                                    <strong class="comp-line-item-e-title-sm">
+                                        타이틀 (body-samll)
+                                    </strong>
+                                    <span class="comp-line-item-e-sub is-icon">
+                                        상세내용
+                                        <svg
+                                            role="img"
+                                            aria-hidden="true"
+                                            class="svg-fg-quaternary"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 16 16"
+                                            fill="none">
+                                            <path
+                                                d="M5.5026 3.99707L9.50586 8.00032L5.5026 12.0036L6.16276 12.6637L10.8262 8.00032L6.16276 3.33691L5.5026 3.99707Z"
+                                                fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                </p>
+                                <div class="comp-line-item-e-inner-right" aria-hidden="true">
+                                    <i
+                                        class="comp-line-item-e-icon comp-icon-dummy s28"
+                                        aria-hidden="true"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 임시 -->
+            <div style="height: 500px"></div>
+        </div>
+    </body>
+</html>
